@@ -7,8 +7,7 @@ const  port = process.env.PORT || 5000;
 
 // middleware 
 
-app.use(cors());
-app.use(express.json());
+
 
   
 
@@ -86,7 +85,7 @@ async function run() {
   //get Toy List from DB
 
   app.get('/toysList', async(req ,res ) => {
-    const cursor = toysCollection.find();
+    const cursor = toysCollection.find().limit(20);
     const result = await cursor.toArray();
     res.send(result);
    })
@@ -98,7 +97,50 @@ async function run() {
     // await client.close();
   }
 }
+// update data
 
+// app.put("/updateJob/:id", async (req, res) => {
+//   const id = req.params.id;
+//   const body = req.body;
+//   console.log(body);
+//   const filter = { _id: new ObjectId(id) };
+//   const updateDoc = {
+//     $set: {
+//       title: body.title,
+//       salary: body.salary,
+//       category: body.category,
+//     },
+//   };
+//   const result = await jobsCollection.updateOne(filter, updateDoc);
+//   res.send(result);
+// });
+
+ // Search 
+
+//  app.get("/getJobsByText/:text", async (req, res) => {
+//   const text = req.params.text;
+//   const result = await jobsCollection
+//     .find({
+//       $or: [
+//         { title: { $regex: text, $options: "i" } },
+//         { category: { $regex: text, $options: "i" } },
+//       ],
+//     })
+//     .toArray();
+//   res.send(result);
+// });
+
+
+// sorting 
+
+
+// app.get("/allJobs", async (req, res) => {
+//   const jobs = await jobsCollection
+//     .find({})
+//     .sort({ createdAt: -1 })
+//     .toArray();
+//   res.send(jobs);
+// });
 
 
 run().catch(console.dir);
